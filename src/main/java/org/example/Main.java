@@ -1,26 +1,44 @@
 package org.example;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
 
+        boolean flag = false;
         int min = 1;
         int max = 100;
         int guess = 0;
         int count = 0;
-
-        System.out.println("Guess the number between "+min+" and "+max+ ":");
         int answer = (int)Math.floor(Math.random()*(max-min+1)+min);
 //        System.out.println("Random integer = " + answer);
-
         Scanner sc = new Scanner(System.in);
 
+        System.out.println("Guess the number between "+min+" and "+max+ ":");
+
+        ArrayList<Integer> numbers = new ArrayList<>();
+
         while (answer != guess) {
-            if(count == 10) {
-                sc.close();
-                System.out.println("You failed to guess the number correctly, no tries remaining. The answer was " + answer + " Better luck next time!");
+
+            if (count == 10) {
+            sc.close();
+            System.out.println("You failed to guess the number correctly, no tries remaining. The answer was " + answer + " Better luck next time!");
             }
+
             guess = sc.nextInt();
+
+            if (numbers.contains(guess)) {
+                System.out.println("You have already guessed that number, please enter a different number.");
+                flag = true;
+            }
+
+            if (!flag) {
+                numbers.add(guess);
+            } else {
+                count = count - 1;
+                flag = false;
+            }
+
             if (guess == answer) {
                 System.out.println("You guessed correctly, well done!");
             } else if (guess >= answer - 3 && guess <= answer + 3) {
